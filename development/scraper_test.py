@@ -13,9 +13,9 @@ def run_page_analysis(url: str, index: int):
 with ThreadPoolExecutor(max_workers=8) as executor:
     future_to_analysis = {}
 
-    url = "https://www.ecoindex.fr"
+    url = "https://www.decathlon.fr"
 
-    for i in range(1):
+    for i in range(10):
         print(f"Starting ecoindex {i} analysis")
         future_to_analysis[
             executor.submit(

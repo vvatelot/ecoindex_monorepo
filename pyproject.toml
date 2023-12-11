@@ -35,6 +35,7 @@ tomli = "^2.0.1"
 pillow = "^10.1.0"
 playwright = "^1.39.0"
 playwright-stealth = "^1.0.6"
+random-user-agent = "^1.0.1"
 
 [tool.poetry.group.cli.dependencies]
 click-spinner = "^0.1.10"

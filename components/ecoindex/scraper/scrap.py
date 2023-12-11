@@ -8,6 +8,7 @@ from ecoindex.compute import compute_ecoindex
 from ecoindex.exceptions.scraper import EcoindexScraperStatusException
 from ecoindex.models.compute import PageMetrics, Result, ScreenShot, WindowSize
 from ecoindex.models.scraper import Requests
+from ecoindex.scraper.user_agent import get_user_agent
 from ecoindex.utils.screenshots import convert_screenshot_to_webp, set_screenshot_rights
 from playwright.async_api import async_playwright
 from playwright_stealth import stealth_async
@@ -58,11 +59,14 @@ class EcoindexScraper:
 
     async def scrap_page(self) -> PageMetrics:
         async with async_playwright() as p:
-            browser = await p.chromium.launch()
+            browser = await p.chromium.launch(headless=False)
+            user_agent = await get_user_agent()
+            print(f"Make request to {self.url} with {user_agent}")
             self.page = await browser.new_page(
                 record_har_path=self.har_temp_file_path,
                 screen=self.window_size.model_dump(),
                 ignore_https_errors=True,
+                user_agent=user_agent,
             )
             await stealth_async(self.page)
             response = await self.page.goto(self.url)
